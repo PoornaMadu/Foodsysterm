@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+require 'Php/connection.php';
+$cookie_name = "logged";
+if (!isset($_COOKIE[$cookie_name])) {
+	header("Location:Loging.php?error=redirectfromCart");
+}
+?>
 
 <head>
-	<title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+	<title>My Cart</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -32,60 +39,7 @@
 <!-- strat nav -->
 
 <body class="goto-here">
-	<div class="py-1 bg-primary">
-		<div class="container">
-			<div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
-				<div class="col-lg-12 d-block">
-					<div class="row d-flex">
-						<div class="col-md pr-4 d-flex topper align-items-center">
-							<div class="icon mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
-							<span class="text">+94712852054</span>
-						</div>
-						<div class="col-md pr-4 d-flex topper align-items-center">
-							<div class="icon mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
-							<span class="text">foodmart@gmail.com</span>
-						</div>
-						<div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-		<div class="container">
-			<a class="navbar-brand" href="index.php">FOOD MART</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> Menu
-			</button>
-
-			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a href="index.php" class="nav-link">Home</a></li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
-						<div class="dropdown-menu" aria-labelledby="dropdown04">
-							<a class="dropdown-item" href="shop.html">All Product</a>
-							<a class="dropdown-item" href="Vegetable.html">Vegetable</a>
-							<a class="dropdown-item" href="cart.html">Fruits</a>
-							<a class="dropdown-item" href="checkout.html">Drinks</a>
-							<a class="dropdown-item" href="checkout.html">Dried</a>
-						</div>
-					</li>
-					<li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
-					<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-					<li class="nav-item"><a href="Loging.php" class="nav-link">Login</a></li>
-					<li class="nav-item"><a href="Signin.php" class="nav-link">Register</a></li>
-					<li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-					<li class="nav-item"><a href="FoodMartadmin/login.php" class="nav-link">Admin</a></li>
-
-
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<!-- END nav -->
+	<?php include 'navbar.php' ?>
 
 	<div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
 		<div class="container">

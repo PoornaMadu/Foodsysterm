@@ -264,6 +264,7 @@ if ($result->num_rows > 0) {
 				foreach ($producttop as $key => $value) {
 					if (empty($value)) continue;
 					if ($value['qty'] == 0) continue;
+					if (!isset($value['old_price'])) continue;
 				?>
 					<div class="col-md-6 col-lg-3 ftco-animate">
 						<div class="product">
