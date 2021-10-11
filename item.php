@@ -11,8 +11,6 @@ if ($result->num_rows > 0) {
 	}
 }
 $output = $data[1];
-print_r($output);
-
 ?>
 
 <head>
@@ -62,21 +60,18 @@ print_r($output);
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6 mb-5 ftco-animate">
-					<a href="images/product-1.jpg" class="image-popup"><img src="images/product-1.jpg" class="img-fluid" alt="Beans-1kg"></a>
+					<a href="images/product-1.jpg" class="image-popup"><img src="images/<?php echo $output['img']; ?>" class="img-fluid" alt="Beans-1kg"></a>
 				</div>
 				<div class="col-lg-6 product-details pl-md-5 ftco-animate">
 					<h3><?php echo $output['name']; ?>
 						<?php echo $output['unit'] === '' ? '' : (' - 1 ' . $output['unit']); ?></h3>
 
 					<p class="price"><span>Rs. <?php echo $output['price']; ?></span></p>
-					<p>Protein: 15 grams.</p>
-					<p> Fat: 1 gram.</p>
-					<p>Carbs: 45 grams.</p>
-					<p>Fiber: 15 grams.</p>
-					<p>Iron: 20% of the Daily Value (DV)</p>
-					<p>Calcium: 8% of the DV.</p>
-					<p>Magnesium: 21% of the DV.</p>
-					<p>25% of the DV.</p>
+					<p>Protein: <?php echo ($output['n1'] . ' ' . $output['n1_unit']) ?></p>
+					<p>Fat: <?php echo ($output['n2'] . ' ' . $output['n2_unit']) ?></p>
+					<p>Carbs: <?php echo ($output['n3'] . ' ' . $output['n3_unit']) ?></p>
+					<p>Fiber: <?php echo ($output['n4'] . ' ' . $output['n4_unit']) ?></p>
+					<p>Iron: <?php echo ($output['n5'] . ' ' . $output['n5_unit']) ?></p>
 
 					<div class="row mt-4">
 						<div class="col-md-6">
