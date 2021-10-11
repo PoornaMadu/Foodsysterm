@@ -2,28 +2,12 @@
 <html lang="en">
 <?php
 require 'Php/connection.php';
-$sql = "SELECT * FROM products ORDER BY sold DESC LIMIT 6";
+$sql = "SELECT * FROM products WHERE qty>1000 ORDER BY sold DESC LIMIT 6";
 $producttop[] = array();
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 	while ($row = $result->fetch_assoc()) {
-		$product_id = $row['id'];
-		$product_name = $row['name'];
-		$product_price = $row['price'];
-		$product_image = $row['img'];
-		$product_quantity = $row['qty'];
-		$product_sold = $row['sold'];
-		$unit = $row['unit'];
-		$item = [
-			"id" => $product_id,
-			"name" => $product_name,
-			"price" => $product_price,
-			"img" => $product_image,
-			"qty" => $product_quantity,
-			"sold" => $product_sold,
-			"unit" => $unit
-		];
-		array_push($producttop, $item);
+		array_push($producttop, $row);
 	}
 }
 ?>
@@ -279,6 +263,7 @@ if ($result->num_rows > 0) {
 				<?php
 				foreach ($producttop as $key => $value) {
 					if (empty($value)) continue;
+					if ($value['qty'] == 0) continue;
 				?>
 					<div class="col-md-6 col-lg-3 ftco-animate">
 						<div class="product">
