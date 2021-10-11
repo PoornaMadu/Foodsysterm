@@ -13,7 +13,7 @@ if ($result->num_rows > 0) {
 ?>
 
 <head>
-	<title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+	<title>Food Mart - All Items</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -83,8 +83,8 @@ if ($result->num_rows > 0) {
 								<h3><a href="#"><?php echo $value['name']; ?></a></h3>
 								<div class="d-flex">
 									<div class="pricing">
-										<p class="price"><span>Rs. <?php echo $value['price']; ?></span></p>
-										<?php if ($value['old_price'] < $value['price']) { ?>
+										<p class="price"><span class="price">Rs:<?php echo $value['price']; ?> <?php echo $value['unit'] === '' ? '' : (' per ' . $value['unit']); ?></span></p>
+										<?php if ($value['old_price'] > $value['price'] && $value['old_price'] != 0) { ?>
 											<p class="price"><span class="mr-2 price-dc">Rs. <?php echo $value['old_price']; ?></span></p>
 										<?php } ?>
 									</div>
@@ -127,7 +127,7 @@ if ($result->num_rows > 0) {
 		<div class="container py-4">
 			<div class="row d-flex justify-content-center py-5">
 				<div class="col-md-6">
-					<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
+					<h2 style="font-size: 22px;" class="mb-2">Subcribe to our Newsletter</h2>
 					<span>Get e-mail updates about our latest shops and special offers</span>
 				</div>
 				<div class="col-md-6 d-flex align-items-center">
@@ -207,11 +207,9 @@ if ($result->num_rows > 0) {
 				<div class="col-md-12 text-center">
 
 					<p>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						Copyright &copy;<script>
 							document.write(new Date().getFullYear());
-						</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</script> All rights reserved | <i class="" aria-hidden="true"></i> by <a href="index.html" target="_blank">Food Mart</a>
 					</p>
 				</div>
 			</div>
