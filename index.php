@@ -2,7 +2,7 @@
 <html lang="en">
 <?php
 require 'Php/connection.php';
-$sql = "SELECT * FROM products WHERE qty>1000 ORDER BY sold DESC LIMIT 6";
+$sql = "SELECT * FROM products WHERE qty>0 ORDER BY sold DESC LIMIT 6";
 $producttop[] = array();
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
@@ -267,25 +267,24 @@ if ($result->num_rows > 0) {
 				?>
 					<div class="col-md-6 col-lg-3 ftco-animate">
 						<div class="product">
-							<a href="/Foodsysterm/beans.php" class="img-prod"><img class="img-fluid" style="width:300px;height:300px;object-fit:cover;" src="images/<?php echo $value['img']; ?>" alt="Beans-1kg">
+							<a href="item.php?id=<?php echo $value['id']; ?>" class="img-prod"><img class="img-fluid" style="width:300px;height:300px;object-fit:cover;" src="images/<?php echo $value['img']; ?>" alt="Beans-1kg">
 								<div class="overlay"></div>
 							</a>
 							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="/Foodsysterm/beans.php"><?php echo $value['name']; ?></a></h3>
+								<h3><a href="item.php?id=<?php echo $value['id']; ?>"><?php echo $value['name']; ?></a></h3>
 								<div class="d-flex">
 									<div class="pricing">
 										<p class="price"><span class="price">Rs:<?php echo $value['price']; ?> <?php echo $value['unit'] === '' ? '' : (' per ' . $value['unit']); ?></span></p>
+										<?php if ($value['old_price'] > $value['price'] && $value['old_price'] != 0) { ?>
+											<p class="price"><span class="mr-2 price-dc">Rs. <?php echo $value['old_price']; ?></span></p>
+										<?php } ?>
 									</div>
 								</div>
 								<div class="bottom-area d-flex px-3">
 									<div class="m-auto d-flex">
-										<a href="/Foodsysterm/cart.php" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
-										<a href="/Foodsysterm/checkout.php" class="buy-now d-flex justify-content-center align-items-center mx-1">
+										<a href="/Foodsysterm/cart.php" class="buy-now d-flex justify-content-center align-items-center mx-1">
 											<span><i class="ion-ios-cart"></i></span>
 										</a>
-
 									</div>
 								</div>
 							</div>

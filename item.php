@@ -2,6 +2,9 @@
 <html lang="en">
 <?php
 require 'Php/connection.php';
+if (!isset($_GET['id'])) {
+	header('Location: index.php');
+}
 $sql = "SELECT * FROM products p INNER JOIN category c ON c.id=p.cat_id INNER JOIN nutrients n ON p.id=n.product_id WHERE p.id=" . $_GET['id'];
 $data[] = array();
 $result = $conn->query($sql);
@@ -10,11 +13,12 @@ if ($result->num_rows > 0) {
 		array_push($data, $row);
 	}
 }
+if (!isset($data[1])) header('Location: index.php');
 $output = $data[1];
 ?>
 
 <head>
-	<title><?php echo $output['name']; ?>-Product</title>
+	<title><?php echo $output['name']; ?> - Product</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -97,7 +101,7 @@ $output = $data[1];
 						</div>
 					</div>
 					<p><a href="/Foodmart/cart.php" class="btn btn-black py-3 px-5">Add to Cart</a>
-						<a href="/Foodmart/checkout.php" class="btn btn-black py-3 px-5">Buy Now</a>
+						<!-- <a href="/Foodmart/checkout.php" class="btn btn-black py-3 px-5">Buy Now</a> -->
 					</p>
 				</div>
 			</div>
