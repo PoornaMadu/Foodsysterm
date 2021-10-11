@@ -75,12 +75,12 @@ if ($result->num_rows > 0) {
 				?>
 					<div class="col-md-6 col-lg-3 ftco-animate">
 						<div class="product">
-							<a href="beans.html" class="img-prod"><img class="img-fluid" style="width:300px;height:300px;object-fit:cover;" src="images/<?php echo $value['img']; ?>" alt="Beans-1kg">
+							<a href="item.php?id=<?php echo $value['id']; ?>" class="img-prod"><img class="img-fluid" style="width:300px;height:300px;object-fit:cover;" src="images/<?php echo $value['img']; ?>" alt="Beans-1kg">
 
 								<div class="overlay"></div>
 							</a>
 							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#"><?php echo $value['name']; ?></a></h3>
+								<h3><a href="item.php?id=<?php echo $value['id']; ?>"><?php echo $value['name']; ?></a></h3>
 								<div class="d-flex">
 									<div class="pricing">
 										<p class="price"><span class="price">Rs:<?php echo $value['price']; ?> <?php echo $value['unit'] === '' ? '' : (' per ' . $value['unit']); ?></span></p>
@@ -91,9 +91,6 @@ if ($result->num_rows > 0) {
 								</div>
 								<div class="bottom-area d-flex px-3">
 									<div class="m-auto d-flex">
-										<a href="cart.html" class="add-to-cart d-flex justify-content-center align-items-center text-center">
-											<span><i class="ion-ios-menu"></i></span>
-										</a>
 										<a href="checkout.html" class="buy-now d-flex justify-content-center align-items-center mx-1">
 											<span><i class="ion-ios-cart"></i></span>
 										</a>

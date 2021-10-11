@@ -185,7 +185,7 @@ if (!isset($_COOKIE[$cookie_name])) {
 		<div class="container py-4">
 			<div class="row d-flex justify-content-center py-5">
 				<div class="col-md-6">
-					<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
+					<h2 style="font-size: 22px;" class="mb-2">Subcribe to our Newsletter</h2>
 					<span>Get e-mail updates about our latest shops and special offers</span>
 				</div>
 				<div class="col-md-6 d-flex align-items-center">
@@ -265,11 +265,9 @@ if (!isset($_COOKIE[$cookie_name])) {
 				<div class="col-md-12 text-center">
 
 					<p>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						Copyright &copy;<script>
 							document.write(new Date().getFullYear());
-						</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</script> All rights reserved | Food Mart
 					</p>
 				</div>
 			</div>

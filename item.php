@@ -44,6 +44,32 @@ $output = $data[1];
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/icomoon.css">
 	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load("current", {
+			packages: ["corechart"]
+		});
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable([
+				['Nutrient', 'quantity'],
+				['Protein', <?php echo ($output['n1_unit'] == 'mg' ? $output['n1'] : $output['n1_unit'] == 'g' ? 100 * $output['n1'] : $output['n1']) ?>],
+				['Fat', <?php echo ($output['n2_unit'] == 'mg' ? $output['n2'] : $output['n2_unit'] == 'g' ? 100 * $output['n2'] : $output['n2']) ?>],
+				['Carbs', <?php echo ($output['n3_unit'] == 'mg' ? $output['n3'] : $output['n3_unit'] == 'g' ? 100 * $output['n3'] : $output['n3']) ?>],
+				['Fiber', <?php echo ($output['n4_unit'] == 'mg' ? $output['n4'] : $output['n4_unit'] == 'g' ? 100 * $output['n4'] : $output['n4']) ?>],
+				['Iron', <?php echo ($output['n5_unit'] == 'mg' ? $output['n5'] : $output['n5_unit'] == 'g' ? 100 * $output['n5'] : $output['n5']) ?>],
+			]);
+
+			var options = {
+				title: 'Nutrients Stat',
+				pieHole: 0.4,
+			};
+
+			var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+			chart.draw(data, options);
+		}
+	</script>
 </head>
 <!-- strat nav -->
 
@@ -76,7 +102,6 @@ $output = $data[1];
 					<p>Carbs: <?php echo ($output['n3'] . ' ' . $output['n3_unit']) ?></p>
 					<p>Fiber: <?php echo ($output['n4'] . ' ' . $output['n4_unit']) ?></p>
 					<p>Iron: <?php echo ($output['n5'] . ' ' . $output['n5_unit']) ?></p>
-
 					<div class="row mt-4">
 						<div class="col-md-6">
 							<div class="form-group d-flex">
@@ -103,6 +128,7 @@ $output = $data[1];
 					<p><a href="/Foodmart/cart.php" class="btn btn-black py-3 px-5">Add to Cart</a>
 						<!-- <a href="/Foodmart/checkout.php" class="btn btn-black py-3 px-5">Buy Now</a> -->
 					</p>
+					<div id="donutchart" style="width: 900px; height: 500px;"></div>
 				</div>
 			</div>
 		</div>
