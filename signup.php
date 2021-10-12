@@ -32,7 +32,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$cookie_name = "logged";
 			$cookie_value = true;
 			setcookie($cookie_name, $cookie_value, time() + (86400), "/");
-			header('location: /Foodsysterm/index.php?signed=1');
+
+			$sql2 = "SELECT * FROM  user WHERE email='$email' AND password='" . md5($password) . "'";
+
+			$result2 = $conn->query($sql2);
+
+			if ($result2->num_rows > 0) {
+				while ($row2 = $result2->fetch_assoc()) {
+					session_start();
+					$_SESSION['user_id'] = $row2['id'];
+					$_SESSION['username'] = $row2['username'];
+					$_SESSION['email'] = $row2['email'];
+
+					header("Location: /Foodsysterm/index.php?signed=1");
+					exit();
+				}
+			}
+			// header('location: /Foodsysterm/index.php?signed=1');
 		} else {
 			echo "ERROR: Unable to execute $sql. " . mysqli_error($conn);
 		}
