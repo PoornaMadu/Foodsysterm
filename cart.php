@@ -6,6 +6,7 @@ $cookie_name = "logged";
 if (!isset($_COOKIE[$cookie_name])) {
 	header("Location:Loging.php?error=redirectfromCart");
 }
+
 ?>
 
 <head>
@@ -39,7 +40,27 @@ if (!isset($_COOKIE[$cookie_name])) {
 <!-- strat nav -->
 
 <body class="goto-here">
-	<?php include 'navbar.php' ?>
+	<?php
+	include 'navbar.php';
+	if (isset($_GET['deleteid'])) {
+		$id = $_GET['deleteid'];
+		$checksql = "DELETE FROM cart WHERE cart_id=$id";
+		$checkresult = mysqli_query($conn, $checksql);
+		if ($checkresult) {
+			echo "<script>alert('Item Deleted!!');</script>";
+			echo "<script>window.open('cart.php','_self');</script>";
+			return 0;
+		}
+	}
+
+	$sql = "SELECT c.*,p.*,c.qty as cartqty  FROM cart c INNER JOIN products p ON c.itemid=p.id WHERE userid=" . $_SESSION['user_id'] . " AND status=0";
+	$result = mysqli_query($conn, $sql);
+	$cartitems[] = array();
+	foreach ($result as $key => $value) {
+		array_push($cartitems, $value);
+	}
+	$total = 0;
+	?>
 
 	<div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
 		<div class="container">
@@ -69,115 +90,103 @@ if (!isset($_COOKIE[$cookie_name])) {
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="text-center">
-									<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+								<?php foreach ($cartitems as $key => $value) {
+									if (empty($value)) continue;
+									$total += $value['price'] * $value['cartqty'];
+								?>
 
-									<td class="image-prod">
-										<div class="img" style="background-image:url(images/product-3.jpg);"></div>
-									</td>
+									<tr class="text-center">
+										<td class="product-remove"><a href="?deleteid=<?php echo $value['cart_id']; ?>"><span class="ion-ios-close"></span></a></td>
 
-									<td class="product-name">
-										<h3>Bell Pepper</h3>
-										<p>Far far away, behind the word mountains, far from the countries</p>
-									</td>
+										<td class="image-prod">
+											<div class="img" style="background-image:url(images/<?php echo $value['img'] ?>);"></div>
+										</td>
 
-									<td class="price">$4.90</td>
+										<td class="product-name">
+											<h3><?php echo ucfirst($value['name']) ?></h3>
+											<!-- <p>Far far away, behind the word mountains, far from the countries</p> -->
+										</td>
 
-									<td class="quantity">
-										<div class="input-group mb-3">
-											<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-										</div>
-									</td>
+										<td class="price">Rs. <?php echo $value['price'] ?></td>
 
-									<td class="total">$4.90</td>
-								</tr><!-- END TR-->
-
-								<tr class="text-center">
-									<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-									<td class="image-prod">
-										<div class="img" style="background-image:url(images/product-4.jpg);"></div>
-									</td>
-
-									<td class="product-name">
-										<h3>Bell Pepper</h3>
-										<p>Far far away, behind the word mountains, far from the countries</p>
-									</td>
-
-									<td class="price">$15.70</td>
-
-									<td class="quantity">
-										<div class="input-group mb-3">
-											<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-										</div>
-									</td>
-
-									<td class="total">$15.70</td>
-								</tr><!-- END TR-->
-							</tbody>
-						</table>
+										<td class="quantity">
+											<div class="input-group mb-1">
+												<input type="text" disabled name="quantity" class="quantity form-control input-number" value=" <?php echo $value['cartqty'] ?>" min="1" max="100">
+												<div class="mt-3"> &nbsp; <?php echo $value['unit'] == '' ? '' : $value['unit'] ?></div>
+											</div>
 					</div>
+					</td>
+
+					<td class="total">Rs. <?php echo $value['price'] * $value['cartqty'] ?></td>
+					</tr>
+
+				<?php
+								}
+				?>
+				</tbody>
+				</table>
 				</div>
 			</div>
-			<div class="row justify-content-end">
-				<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Coupon Code</h3>
-						<p>Enter your coupon code if you have one</p>
-						<form action="#" class="info">
-							<div class="form-group">
-								<label for="">Coupon code</label>
-								<input type="text" class="form-control text-left px-3" placeholder="">
-							</div>
-						</form>
-					</div>
-					<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
+		</div>
+		<div class="row justify-content-end">
+			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+				<div class="cart-total mb-3">
+					<h3>Coupon Code</h3>
+					<p>Enter your coupon code if you have one</p>
+					<form action="#" class="info">
+						<div class="form-group">
+							<label for="">Coupon code</label>
+							<input type="text" class="form-control text-left px-3" placeholder="">
+						</div>
+					</form>
 				</div>
-				<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Estimate shipping and tax</h3>
-						<p>Enter your destination to get a shipping estimate</p>
-						<form action="#" class="info">
-							<div class="form-group">
-								<label for="">Country</label>
-								<input type="text" class="form-control text-left px-3" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="country">State/Province</label>
-								<input type="text" class="form-control text-left px-3" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="country">Zip/Postal Code</label>
-								<input type="text" class="form-control text-left px-3" placeholder="">
-							</div>
-						</form>
-					</div>
-					<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Estimate</a></p>
-				</div>
-				<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Cart Totals</h3>
-						<p class="d-flex">
-							<span>Subtotal</span>
-							<span>$20.60</span>
-						</p>
-						<p class="d-flex">
-							<span>Delivery</span>
-							<span>$0.00</span>
-						</p>
-						<p class="d-flex">
-							<span>Discount</span>
-							<span>$3.00</span>
-						</p>
-						<hr>
-						<p class="d-flex total-price">
-							<span>Total</span>
-							<span>$17.60</span>
-						</p>
-					</div>
-					<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
-				</div>
+				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
 			</div>
+			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+				<div class="cart-total mb-3">
+					<h3>Estimate shipping and tax</h3>
+					<p>Enter your destination to get a shipping estimate</p>
+					<form action="#" class="info">
+						<div class="form-group">
+							<label for="">Country</label>
+							<input type="text" class="form-control text-left px-3" placeholder="">
+						</div>
+						<div class="form-group">
+							<label for="country">State/Province</label>
+							<input type="text" class="form-control text-left px-3" placeholder="">
+						</div>
+						<div class="form-group">
+							<label for="country">Zip/Postal Code</label>
+							<input type="text" class="form-control text-left px-3" placeholder="">
+						</div>
+					</form>
+				</div>
+				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Estimate</a></p>
+			</div>
+			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+				<div class="cart-total mb-3">
+					<h3>Cart Totals</h3>
+					<p class="d-flex">
+						<span>Subtotal</span>
+						<span>$20.60</span>
+					</p>
+					<p class="d-flex">
+						<span>Delivery</span>
+						<span>$0.00</span>
+					</p>
+					<p class="d-flex">
+						<span>Discount</span>
+						<span>$3.00</span>
+					</p>
+					<hr>
+					<p class="d-flex total-price">
+						<span>Total</span>
+						<span>$17.60</span>
+					</p>
+				</div>
+				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+			</div>
+		</div>
 		</div>
 	</section>
 

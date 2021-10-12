@@ -15,6 +15,7 @@ if ($result->num_rows > 0) {
 }
 if (!isset($data[1])) header('Location: index.php');
 $output = $data[1];
+$qty = 1;
 ?>
 
 <head>
@@ -75,6 +76,30 @@ $output = $data[1];
 
 <body class="goto-here">
 	<?php include 'navbar.php' ?>
+	<?php
+	if (isset($_GET['id']) && isset($_GET['quantity'])) {
+		$id = $_GET['id'];
+		$qty = $_GET['quantity'];
+		$user_id = $_SESSION['user_id'];
+		$checksql = "SELECT * FROM cart WHERE itemid=$id AND userid=$user_id AND status=0";
+		$checkresult = mysqli_query($conn, $checksql);
+		if (mysqli_num_rows($checkresult) > 0) {
+			echo "<script>alert('Item Already added to cart!!');</script>";
+			echo "<script>window.open('item.php?id=" . $id . "','_self');</script>";
+			return 0;
+		} else {
+			$sql = "INSERT INTO cart(userid, itemid, qty, status) VALUES ('$user_id','$id','$qty','0')";
+			if (mysqli_query($conn, $sql)) {
+				echo "<script>alert('Successfully added to cart');</script>";
+				echo "<script>window.open('cart.php','_self');</script>";
+			} else {
+				echo "<script>alert('Something went wrong');</script>";
+				echo "<script>window.open('dried.php','_self');</script>";
+			}
+		}
+	}
+
+	?>
 	<div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
 		<div class="container">
 			<div class="row no-gutters slider-text align-items-center justify-content-center">
@@ -102,32 +127,35 @@ $output = $data[1];
 					<p>Carbs: <?php echo ($output['n3'] . ' ' . $output['n3_unit']) ?></p>
 					<p>Fiber: <?php echo ($output['n4'] . ' ' . $output['n4_unit']) ?></p>
 					<p>Iron: <?php echo ($output['n5'] . ' ' . $output['n5_unit']) ?></p>
-					<div class="row mt-4">
-						<div class="col-md-6">
-							<div class="form-group d-flex">
-								<div class="select-wrap">
+					<form action="" name="addform" id="addform">
+						<input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" />
+						<div class="row mt-4">
+							<div class="col-md-6">
+								<div class="form-group d-flex">
+									<div class="select-wrap">
 
+									</div>
 								</div>
 							</div>
+							<div class="w-100"></div>
+							<div class="input-group col-md-6 d-flex mb-3">
+								<span class="input-group-btn mr-2">
+									<button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
+										<i class="ion-ios-remove"></i>
+									</button>
+								</span>
+								<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+								<span class="input-group-btn ml-2">
+									<button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+										<i class="ion-ios-add"></i>
+									</button>
+								</span>
+							</div>
 						</div>
-						<div class="w-100"></div>
-						<div class="input-group col-md-6 d-flex mb-3">
-							<span class="input-group-btn mr-2">
-								<button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
-									<i class="ion-ios-remove"></i>
-								</button>
-							</span>
-							<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
-							<span class="input-group-btn ml-2">
-								<button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-									<i class="ion-ios-add"></i>
-								</button>
-							</span>
-						</div>
-					</div>
-					<p><a href="/Foodmart/cart.php" class="btn btn-black py-3 px-5">Add to Cart</a>
-						<!-- <a href="/Foodmart/checkout.php" class="btn btn-black py-3 px-5">Buy Now</a> -->
-					</p>
+						<p>
+						<div class="btn btn-black py-3 px-5" onclick="document.getElementById('addform').submit();">Add to Cart</div>
+						</p>
+					</form>
 					<div id="donutchart" style="width: 900px; height: 500px;"></div>
 				</div>
 			</div>
@@ -250,7 +278,6 @@ $output = $data[1];
 				// If is not undefined
 
 				$('#quantity').val(quantity + 1);
-
 
 				// Increment
 
