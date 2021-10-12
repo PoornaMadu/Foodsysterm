@@ -44,6 +44,29 @@ if ($result->num_rows > 0) {
 
 <body class="goto-here">
 	<?php include 'navbar.php' ?>
+	<?php
+	if (isset($_GET['id']) && isset($_GET['qty'])) {
+		$id = $_GET['id'];
+		$qty = $_GET['qty'];
+		$user_id = $_SESSION['user_id'];
+		$checksql = "SELECT * FROM cart WHERE itemid=$id AND userid=$user_id AND status=0";
+		$checkresult = mysqli_query($conn, $checksql);
+		if (mysqli_num_rows($checkresult) > 0) {
+			echo "<script>alert('Item Already added to cart!!');</script>";
+			echo "<script>window.open('shop.php','_self');</script>";
+			return 0;
+		}
+		$sql = "INSERT INTO cart(userid, itemid, qty, status) VALUES ('$user_id','$id','$qty','0')";
+		if (mysqli_query($conn, $sql)) {
+			echo "<script>alert('Successfully added to cart');</script>";
+			echo "<script>window.open('cart.php','_self');</script>";
+		} else {
+			echo "<script>alert('Something went wrong');</script>";
+			echo "<script>window.open('shop.php','_self');</script>";
+		}
+	}
+	?>
+
 	<div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
 		<div class="container">
 			<div class="row no-gutters slider-text align-items-center justify-content-center">
@@ -91,7 +114,7 @@ if ($result->num_rows > 0) {
 								</div>
 								<div class="bottom-area d-flex px-3">
 									<div class="m-auto d-flex">
-										<a href="checkout.html" class="buy-now d-flex justify-content-center align-items-center mx-1">
+										<a href="?id=<?php echo $value['id']; ?>&qty=1" class="buy-now d-flex justify-content-center align-items-center mx-1">
 											<span><i class="ion-ios-cart"></i></span>
 										</a>
 

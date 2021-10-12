@@ -171,7 +171,7 @@ if ($result->num_rows > 0) {
 		$checkresult = mysqli_query($conn, $checksql);
 		if (mysqli_num_rows($checkresult) > 0) {
 			echo "<script>alert('Item Already added to cart!!');</script>";
-			echo "<script>window.open('cart.php','_self');</script>";
+			echo "<script>window.open('index.php','_self');</script>";
 			return 0;
 		}
 		$sql = "INSERT INTO cart(userid, itemid, qty, status) VALUES ('$user_id','$id','$qty','0')";
@@ -183,8 +183,6 @@ if ($result->num_rows > 0) {
 			echo "<script>window.open('index.php','_self');</script>";
 		}
 	}
-
-
 	?>
 	<!-- Slide menu -->
 	<section id="home-section" class="hero">
