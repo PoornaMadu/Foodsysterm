@@ -239,6 +239,10 @@ if ($result->num_rows > 0) {
                         <li class="nav-item"><a href="/Foodsysterm/Signup.php" class="nav-link">Register</a></li>
                     <?php } ?>
                     <li class="nav-item cta cta-colored <?php echo ((strpos($_SERVER['REQUEST_URI'], "cart") !== false) ? 'active' : '') ?>"><a href="/Foodsysterm/cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+                    <?php if ($logged) {
+                    ?>
+                        <li class="nav-item float-right"><a href="/Foodsysterm/logout.php" class="nav-link">Logout</a></li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>
