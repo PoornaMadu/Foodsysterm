@@ -2,6 +2,7 @@
 <html lang="en">
 <?php
 require 'Php/connection.php';
+
 $sql = "SELECT * FROM products WHERE qty>0 ORDER BY sold DESC LIMIT 6";
 $producttop[] = array();
 $result = $conn->query($sql);
@@ -161,8 +162,30 @@ if ($result->num_rows > 0) {
 
 <body class="goto-here">
 	<?php include 'navbar.php' ?>
+	<?php
+	if (isset($_GET['id']) && isset($_GET['qty'])) {
+		$id = $_GET['id'];
+		$qty = $_GET['qty'];
+		$user_id = $_SESSION['user_id'];
+		$checksql = "SELECT * FROM cart WHERE itemid=$id AND userid=$user_id AND status=0";
+		$checkresult = mysqli_query($conn, $checksql);
+		if (mysqli_num_rows($checkresult) > 0) {
+			echo "<script>alert('Item Already added to cart!!');</script>";
+			echo "<script>window.open('cart.php','_self');</script>";
+			return 0;
+		}
+		$sql = "INSERT INTO cart(userid, itemid, qty, status) VALUES ('$user_id','$id','$qty','0')";
+		if (mysqli_query($conn, $sql)) {
+			echo "<script>alert('Successfully added to cart');</script>";
+			echo "<script>window.open('cart.php','_self');</script>";
+		} else {
+			echo "<script>alert('Something went wrong');</script>";
+			echo "<script>window.open('index.php','_self');</script>";
+		}
+	}
 
 
+	?>
 	<!-- Slide menu -->
 	<section id="home-section" class="hero">
 		<div class="home-slider owl-carousel">
@@ -283,7 +306,7 @@ if ($result->num_rows > 0) {
 								</div>
 								<div class="bottom-area d-flex px-3">
 									<div class="m-auto d-flex">
-										<a href="/Foodsysterm/cart.php" class="buy-now d-flex justify-content-center align-items-center mx-1">
+										<a href="?id=<?php echo $value['id']; ?>&qty=1" class="buy-now d-flex justify-content-center align-items-center mx-1">
 											<span><i class="ion-ios-cart"></i></span>
 										</a>
 									</div>
