@@ -26,10 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['email'] = $row['email'];
 
-                header("Location: /Foodsysterm/index.php?logged=true");
                 $cookie_name = "logged";
                 $cookie_value = true;
                 setcookie($cookie_name, $cookie_value, time() + (86400), "/");
+                header("Location: /Foodsysterm/index.php?logged=true");
                 exit();
             }
         } else {

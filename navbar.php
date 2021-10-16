@@ -2,21 +2,22 @@
 <html lang="en">
 <?php
 require 'Php/connection.php';
+session_start();
 $cookie_name = "logged";
 $logged = false;
+$result2 = '';
 if (!isset($_COOKIE[$cookie_name])) {
     // header("Location: login.php");
     // header("Location:Loging.php?error=redirectfromHome");
     $logged = false;
 } else if (isset($_COOKIE[$cookie_name]) && $_COOKIE[$cookie_name]) {
+    $sql2 = "SELECT * FROM cart c INNER JOIN products p ON c.itemid=p.id WHERE userid=" . $_SESSION['user_id'] . " AND status=0";
+    $result2 = mysqli_query($conn, $sql2);
     $logged = true;
 } else {
     $logged = false;
 }
-session_start();
 // print_r($_SESSION);
-$sql2 = "SELECT * FROM cart c INNER JOIN products p ON c.itemid=p.id WHERE userid=" . $_SESSION['user_id'] . " AND status=0";
-$result2 = mysqli_query($conn, $sql2);
 
 
 $sql = "SELECT * FROM products ORDER BY sold DESC LIMIT 6";
@@ -241,7 +242,7 @@ if ($result->num_rows > 0) {
                         <li class="nav-item"><a href="/Foodsysterm/Loging.php" class="nav-link">Login</a></li>
                         <li class="nav-item"><a href="/Foodsysterm/Signup.php" class="nav-link">Register</a></li>
                     <?php } ?>
-                    <li class="nav-item cta cta-colored <?php echo ((strpos($_SERVER['REQUEST_URI'], "cart") !== false) ? 'active' : '') ?>"><a href="/Foodsysterm/cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[<?php echo $result2->num_rows ?>]</a></li>
+                    <li class="nav-item cta cta-colored <?php echo ((strpos($_SERVER['REQUEST_URI'], "cart") !== false) ? 'active' : '') ?>"><a href="/Foodsysterm/cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[<?php echo (isset($_COOKIE[$cookie_name])) ? $result2->num_rows : '0' ?>]</a></li>
                     <?php if ($logged) {
                     ?>
                         <li class="nav-item float-right"><a href="/Foodsysterm/logout.php" class="nav-link">Logout</a></li>
