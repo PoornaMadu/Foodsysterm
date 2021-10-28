@@ -90,7 +90,7 @@ if (!isset($_COOKIE[$cookie_name])) {
 								</tr>
 							</thead>
 							<tbody>
-								//TODO change qty
+								<!-- //TODO change qty with ajax call -->
 								<?php foreach ($cartitems as $key => $value) {
 									if (empty($value)) continue;
 									$total += $value['price'] * $value['cartqty'];
