@@ -31,7 +31,7 @@ if (!isset($_COOKIE[$cookie_name])) {
 
 	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
 	<link rel="stylesheet" href="css/jquery.timepicker.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/icomoon.css">
@@ -90,7 +90,6 @@ if (!isset($_COOKIE[$cookie_name])) {
 								</tr>
 							</thead>
 							<tbody>
-								<!-- //TODO change qty with ajax call -->
 								<?php foreach ($cartitems as $key => $value) {
 									if (empty($value)) continue;
 									$total += $value['price'] * $value['cartqty'];
@@ -108,19 +107,19 @@ if (!isset($_COOKIE[$cookie_name])) {
 											<!-- <p>Far far away, behind the word mountains, far from the countries</p> -->
 										</td>
 
-										<td class="price">Rs. <?php echo $value['price'] ?></td>
+										<td class="price">Rs. <span id="price-<?php echo $value['cart_id']; ?>"><?php echo $value['price'] ?></span></td>
 
 										<td class="quantity">
 											<div class="input-group mb-1">
-												<input type="text" disabled name="quantity" class="quantity form-control input-number" value=" <?php echo $value['cartqty'] ?>" min="1" max="100">
+												<button class="btn btn-primary px-2 mx-1" type="button" onclick="increment(<?php echo $value['cart_id'] ?>)">+</button>
+												<input type="text" disabled name="quantity" id="qty-<?php echo $value['cart_id']; ?>" class="quantity form-control input-number" value=" <?php echo $value['cartqty'] ?>" min="1" max="100">
+												<button class="btn btn-danger px-2 mx-1" type="button" onclick="decrement(<?php echo $value['cart_id'] ?>)"> - </button>
 												<div class="mt-3"> &nbsp; <?php echo $value['unit'] == '' ? '' : $value['unit'] ?></div>
 											</div>
 					</div>
 					</td>
-
-					<td class="total">Rs. <?php echo $value['price'] * $value['cartqty'] ?></td>
+					<td class="total">Rs. <span id="total-<?php echo $value['cart_id']; ?>"> <?php echo number_format($value['price'] * $value['cartqty'], 2) ?></span></td>
 					</tr>
-
 				<?php
 								}
 				?>
@@ -131,7 +130,7 @@ if (!isset($_COOKIE[$cookie_name])) {
 		</div>
 		<div class="row justify-content-end">
 			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-				<div class="cart-total mb-3">
+				<!-- <div class="cart-total mb-3">
 					<h3>Coupon Code</h3>
 					<p>Enter your coupon code if you have one</p>
 					<form action="#" class="info">
@@ -140,49 +139,33 @@ if (!isset($_COOKIE[$cookie_name])) {
 							<input type="text" class="form-control text-left px-3" placeholder="">
 						</div>
 					</form>
+				</div> -->
+				<!-- <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Apply Coupon</a></p> -->
+			</div>
+			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+				<div class="">
+
 				</div>
-				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
 			</div>
 			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
 				<div class="cart-total mb-3">
-					<h3>Estimate shipping and tax</h3>
-					<p>Enter your destination to get a shipping estimate</p>
-					<form action="#" class="info">
-						<div class="form-group">
-							<label for="">Country</label>
-							<input type="text" class="form-control text-left px-3" placeholder="">
-						</div>
-						<div class="form-group">
-							<label for="country">State/Province</label>
-							<input type="text" class="form-control text-left px-3" placeholder="">
-						</div>
-						<div class="form-group">
-							<label for="country">Zip/Postal Code</label>
-							<input type="text" class="form-control text-left px-3" placeholder="">
-						</div>
-					</form>
-				</div>
-				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Estimate</a></p>
-			</div>
-			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-				<div class="cart-total mb-3">
-					<h3>Cart Totals</h3>
+					<h3>Cart Total</h3>
 					<p class="d-flex">
 						<span>Subtotal</span>
-						<span>$20.60</span>
+						<span>Rs. <?php echo number_format($total, 2); ?></span>
 					</p>
-					<p class="d-flex">
+					<!-- <p class="d-flex">
 						<span>Delivery</span>
 						<span>$0.00</span>
 					</p>
 					<p class="d-flex">
 						<span>Discount</span>
 						<span>$3.00</span>
-					</p>
+					</p> -->
 					<hr>
 					<p class="d-flex total-price">
 						<span>Total</span>
-						<span>$17.60</span>
+						<span>Rs. <?php echo number_format($total, 2); ?></span>
 					</p>
 				</div>
 				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
@@ -345,6 +328,40 @@ if (!isset($_COOKIE[$cookie_name])) {
 			});
 
 		});
+
+
+		function decrement(idd) {
+			price = Number(document.getElementById("price-" + idd).innerHTML);
+			qty = Number(document.getElementById("qty-" + idd).value);
+			total = Number(document.getElementById("total-" + idd).innerHTML);
+			if (qty <= 1) return;
+			document.getElementById("qty-" + idd).value = (--qty).toFixed(2);
+			document.getElementById("total-" + idd).innerHTML = (price * qty).toFixed(2);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					console.log(this.responseText);
+				}
+			};
+			xmlhttp.open("GET", "ajax/cartoperations.php?id=" + idd + "&op=dec", true);
+			xmlhttp.send();
+		}
+
+		function increment(idd) {
+			price = Number(document.getElementById("price-" + idd).innerHTML);
+			qty = Number(document.getElementById("qty-" + idd).value);
+			total = Number(document.getElementById("total-" + idd).innerHTML);
+			document.getElementById("qty-" + idd).value = (++qty).toFixed(2);
+			document.getElementById("total-" + idd).innerHTML = (price * qty).toFixed(2);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					console.log(this.responseText);
+				}
+			};
+			xmlhttp.open("GET", "ajax/cartoperations.php?id=" + idd + "&op=inc", true);
+			xmlhttp.send();
+		}
 	</script>
 
 </body>
