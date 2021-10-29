@@ -120,6 +120,7 @@ $qty = 1;
 			<div class="row">
 				<div class="col-lg-6 mb-5 ftco-animate">
 					<a href="images/product-1.jpg" class="image-popup"><img src="images/<?php echo $output['img']; ?>" class="img-fluid" alt="Beans-1kg"></a>
+					<div id="donutchart" style="width: 900px; height: 500px;" class="ml-n5"></div>
 				</div>
 				<div class="col-lg-6 product-details pl-md-5 ftco-animate">
 					<h3><?php echo $output['name']; ?>
@@ -160,7 +161,10 @@ $qty = 1;
 						<div class="btn btn-black py-3 px-5" onclick="document.getElementById('addform').submit();">Add to Cart</div>
 						</p>
 					</form>
-					<div id="donutchart" style="width: 900px; height: 500px;"></div>
+					<div class="ml-5 mt-5">
+						<h4>Item Description</h4>
+						<p><?php echo $output['description']; ?></p>
+					</div>
 				</div>
 			</div>
 		</div>
