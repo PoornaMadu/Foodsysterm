@@ -132,7 +132,7 @@
 									<p class="d-flex total-price">
 										<span>Total</span>
 										<span>Rs. <?php echo number_format($total, 2); ?></span>
-										<input type="hidden" name="total" value="17500.50">
+										<input type="hidden" name="total" value="<?php echo $total ?>">
 									</p>
 								</div>
 							</div>
