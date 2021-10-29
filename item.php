@@ -79,6 +79,10 @@ $qty = 1;
 	<?php
 	if (isset($_GET['id']) && isset($_GET['quantity'])) {
 		$id = $_GET['id'];
+		if ($_GET['quantity'] <= 0) {
+			echo "<script>alert('Quantity cannot be Negative!!');</script>";
+			echo "<script>window.open('item.php?id=" . $id . "','_self');</script>";
+		};
 		$qty = $_GET['quantity'];
 		$user_id = $_SESSION['user_id'];
 		$checksql = "SELECT * FROM cart WHERE itemid=$id AND userid=$user_id AND status=0";
@@ -144,7 +148,7 @@ $qty = 1;
 										<i class="ion-ios-remove"></i>
 									</button>
 								</span>
-								<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+								<input type="number" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="<?php echo number_format($output['qty'], 0); ?>">
 								<span class="input-group-btn ml-2">
 									<button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
 										<i class="ion-ios-add"></i>
@@ -274,6 +278,10 @@ $qty = 1;
 				e.preventDefault();
 				// Get the field name
 				var quantity = parseInt($('#quantity').val());
+				if (quantity >= <?php echo $output['qty']; ?>) {
+					alert("You can't order more than <?php echo $output['qty']; ?> items");
+					return false;
+				}
 
 				// If is not undefined
 
