@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+	<title>Checkout</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -238,11 +238,9 @@
 				<div class="col-md-12 text-center">
 
 					<p>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						Copyright &copy;<script>
 							document.write(new Date().getFullYear());
-						</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</script> All rights reserved | <i class="" aria-hidden="true"></i> by <a href="index.html" target="_blank">Food Mart</a>
 					</p>
 				</div>
 			</div>
@@ -311,6 +309,28 @@
 
 		});
 	</script>
+
+	<form method="post" action="https://sandbox.payhere.lk/pay/checkout">
+		<input type="hidden" name="merchant_id" value="1219027"> <!-- Replace your Merchant ID -->
+		<input type="hidden" name="return_url" value="http://sample.com/return">
+		<input type="hidden" name="cancel_url" value="http://sample.com/cancel">
+		<input type="hidden" name="notify_url" value="http://sample.com/notify">
+		<br><br>Item Details<br>
+		<input type="text" name="order_id" value="ItemNo12345">
+		<input type="text" name="items" value="Door bell wireless"><br>
+		<input type="text" name="currency" value="LKR">
+		<input type="text" name="amount" value="1000">
+		<br><br>Customer Details<br>
+		<input type="text" name="first_name" value="Saman">
+		<input type="text" name="last_name" value="Perera"><br>
+		<input type="text" name="email" value="samanp@gmail.com">
+		<input type="text" name="phone" value="0771234567"><br>
+		<input type="text" name="address" value="No.1, Galle Road">
+		<input type="text" name="city" value="Colombo">
+		<input type="hidden" name="country" value="Sri Lanka"><br><br>
+		<input type="submit" value="Buy Now">
+	</form>
+
 
 </body>
 
