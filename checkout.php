@@ -46,22 +46,22 @@
 	</div>
 
 	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-xl-7 ftco-animate">
-					<form action="#" class="billing-form">
+		<form action="payhere.php" class="billing-form" method="POST">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-xl-7 ftco-animate">
 						<h3 class="mb-4 billing-heading">Billing Details</h3>
 						<div class="row align-items-end">
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="firstname">Firt Name</label>
-									<input type="text" class="form-control" placeholder="">
+									<input type="text" class="form-control" placeholder="" name="fname" required>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="lastname">Last Name</label>
-									<input type="text" class="form-control" placeholder="">
+									<input type="text" class="form-control" placeholder="" name="lname" required>
 								</div>
 							</div>
 							<div class="w-100"></div>
@@ -70,89 +70,92 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="streetaddress">Street Address</label>
-									<input type="text" class="form-control" placeholder="House number and street name">
+									<input type="text" class="form-control" placeholder="House number and street name" name="addr1" required>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
+									<input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)" name="addr2">
 								</div>
 							</div>
 							<div class="w-100"></div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="towncity">Town / City</label>
-									<input type="text" class="form-control" placeholder="">
+									<input type="text" class="form-control" placeholder="" name="city" required>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="postcodezip">Postcode / ZIP *</label>
-									<input type="text" class="form-control" placeholder="">
+									<input type="text" class="form-control" placeholder="" name="pcode" required>
 								</div>
 							</div>
 							<div class="w-100"></div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="phone">Phone</label>
-									<input type="text" class="form-control" placeholder="">
+									<label for="phone">Mobile Number</label>
+									<input type="text" class="form-control" placeholder="0766344989" pattern="\d{10}" title="Invalid Phone Number." name="mobile" required>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="emailaddress">Email Address</label>
-									<input type="text" class="form-control" placeholder="">
+									<input type="text" class="form-control" placeholder="" name="email" required>
 								</div>
 							</div>
 							<div class="w-100"></div>
 						</div>
-					</form><!-- END -->
-				</div>
-				<div class="col-xl-5">
-					<div class="row mt-5 pt-3">
-						<div class="col-md-12 d-flex mb-5">
-							<div class="cart-detail cart-total p-3 p-md-4">
-								<h3 class="billing-heading mb-4">Cart Total</h3>
+					</div>
+					<div class="col-xl-5">
+						<div class="row mt-5 pt-3">
+							<div class="col-md-12 d-flex mb-5">
+								<div class="cart-detail cart-total p-3 p-md-4">
+									<h3 class="billing-heading mb-4">Cart Total</h3>
 
-								<hr>
-								<p class="d-flex total-price">
-									<span>Total</span>
-									<span>Rs. 17500.50</span>
-								</p>
+									<hr>
+									<p class="d-flex total-price">
+										<span>Total</span>
+										<span>Rs. 17500.50</span>
+										<input type="hidden" name="total" value="17500.50">
+									</p>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="cart-detail p-3 p-md-4">
-								<h3 class="billing-heading mb-4">Payment Method</h3>
-								<div class="form-group">
-									<div class="col-md-12">
-										<div class="radio">
-											<label><input type="radio" name="optradio" class="mr-2"> Visa/ Master/ Amex</label>
+							<div class="col-md-12">
+								<div class="cart-detail p-3 p-md-4">
+									<h3 class="billing-heading mb-4">Payment Method</h3>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+												<label><input type="radio" name="pay" value="Online" class="mr-2"> Visa/ Master/ Amex</label>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-12">
-										<div class="radio">
-											<label><input type="radio" name="optradio" class="mr-2"> Cash on Delivery</label>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+												<label><input type="radio" name="pay" value="Cash On Delivery" class="mr-2"> Cash on Delivery</label>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-12">
-										<div class="checkbox">
-											<label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="checkbox">
+												<label><input type="checkbox" value="" class="mr-2" required> I have read and accept the terms and conditions</label>
+											</div>
 										</div>
 									</div>
+									<p>
+										<button class="btn btn-primary py-3 px-4">Place an order</button>
+									</p>
 								</div>
-								<p><a href="#" class="btn btn-primary py-3 px-4">Place an order</a></p>
 							</div>
 						</div>
 					</div>
-				</div> <!-- .col-md-8 -->
+				</div>
 			</div>
-		</div>
-	</section> <!-- .section -->
+		</form>
+	</section>
 
 	<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
 		<div class="container py-4">
@@ -310,26 +313,7 @@
 		});
 	</script>
 
-	<form method="post" action="https://sandbox.payhere.lk/pay/checkout">
-		<input type="hidden" name="merchant_id" value="1219027"> <!-- Replace your Merchant ID -->
-		<input type="hidden" name="return_url" value="http://sample.com/return">
-		<input type="hidden" name="cancel_url" value="http://sample.com/cancel">
-		<input type="hidden" name="notify_url" value="http://sample.com/notify">
-		<br><br>Item Details<br>
-		<input type="text" name="order_id" value="ItemNo12345">
-		<input type="text" name="items" value="Door bell wireless"><br>
-		<input type="text" name="currency" value="LKR">
-		<input type="text" name="amount" value="1000">
-		<br><br>Customer Details<br>
-		<input type="text" name="first_name" value="Saman">
-		<input type="text" name="last_name" value="Perera"><br>
-		<input type="text" name="email" value="samanp@gmail.com">
-		<input type="text" name="phone" value="0771234567"><br>
-		<input type="text" name="address" value="No.1, Galle Road">
-		<input type="text" name="city" value="Colombo">
-		<input type="hidden" name="country" value="Sri Lanka"><br><br>
-		<input type="submit" value="Buy Now">
-	</form>
+
 
 
 </body>

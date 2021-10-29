@@ -114,7 +114,8 @@ if (!isset($_COOKIE[$cookie_name])) {
 												<button class="btn btn-primary px-2 mx-1" type="button" onclick="increment(<?php echo $value['cart_id'] ?>)">+</button>
 												<input type="text" disabled name="quantity" id="qty-<?php echo $value['cart_id']; ?>" class="quantity form-control input-number" value=" <?php echo $value['cartqty'] ?>" min="1" max="100">
 												<button class="btn btn-danger px-2 mx-1" type="button" onclick="decrement(<?php echo $value['cart_id'] ?>)"> - </button>
-												<div class="mt-3"> &nbsp; <?php echo $value['unit'] == '' ? '' : $value['unit'] ?></div>
+												<!-- <div class="mt-3"> &nbsp; <?php echo $value['unit'] == '' ? '' : $value['unit'] ?></div> -->
+												<?php echo $value['unit'] == '' ? "<div class='mt-3'> &nbsp; &nbsp; &nbsp;</div>" : "<div class='mt-3'>&nbsp;" . $value['unit'] . "</div>" ?>
 											</div>
 					</div>
 					</td>

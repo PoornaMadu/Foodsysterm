@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
   <title>Order Successful</title>
@@ -29,14 +30,42 @@
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
+<script>
+  var myVar;
+
+  function myFunction() {
+    myVar = setTimeout(showPage, 4000);
+  }
+
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("myDiv").style.display = "block";
+  }
+</script>
+
+<?php
+require 'Php/connection.php';
+$refno = time();
+if (isset($_GET['ordid'])) {
+  $sql1 = "UPDATE orders SET ref = $refno WHERE id = '" . $_GET['ordid'] . "'";
+  $result = $conn->query($sql1);
+}
+if (isset($_GET['order_id'])) {
+  $sql2 = "UPDATE orders SET ref = $refno WHERE id = '" . $_GET['order_id'] . "'";
+  $result = $conn->query($sql2);
+}
+
+?>
 
 <body class="bodyclass2" onload="myFunction()" style="margin:0;">
   <?php include("navbar.php"); ?>
   <center>
     <div id="loader"></div>
     <div style="display:none;" id="myDiv" class="animate-bottom">
-      <h2>Booking complete!</h2>
+      <h2>Your Order is completed!</h2>
       <p>We are happy to have you here!</p>
+      <p>We will Contact you Soon!</p>
+      <p>Your Reference Number is #<?php echo $refno; ?></p>
       <img src="images/Tick.png" width="280" height="280">
       <br>
       <a href="index.php">
@@ -44,22 +73,6 @@
       </a>
     </div>
   </center>
-  <?php
-  // print_r($result);
-  ?>
-
-  <script>
-    var myVar;
-
-    function myFunction() {
-      myVar = setTimeout(showPage, 6000);
-    }
-
-    function showPage() {
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("myDiv").style.display = "block";
-    }
-  </script>
 </body>
 
 </html>
