@@ -169,7 +169,7 @@ if (!isset($_COOKIE[$cookie_name])) {
 						<span>Rs. <?php echo number_format($total, 2); ?></span>
 					</p>
 				</div>
-				<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+				<p><a href="<?php echo $total == 0 ? '#' : 'checkout.php' ?>" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
 			</div>
 		</div>
 		</div>

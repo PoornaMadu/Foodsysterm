@@ -30,9 +30,24 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
+
 <body class="goto-here">
 	<?php include 'navbar.php' ?>
+	<?php
+	require 'Php/connection.php';
+	$sql = "SELECT c.*,p.*,c.qty as cartqty  FROM cart c INNER JOIN products p ON c.itemid=p.id WHERE userid=" . $_SESSION['user_id'] . " AND status=0";
+	$result = mysqli_query($conn, $sql);
+	$cartitems[] = array();
+	foreach ($result as $key => $value) {
+		array_push($cartitems, $value);
+	}
+	$total = 0;
+	foreach ($cartitems as $key => $value) {
+		if (empty($value)) continue;
+		$total += $value['price'] * $value['cartqty'];
+	}
 
+	?>
 
 	<div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
 		<div class="container">
@@ -116,7 +131,7 @@
 									<hr>
 									<p class="d-flex total-price">
 										<span>Total</span>
-										<span>Rs. 17500.50</span>
+										<span>Rs. <?php echo number_format($total, 2); ?></span>
 										<input type="hidden" name="total" value="17500.50">
 									</p>
 								</div>

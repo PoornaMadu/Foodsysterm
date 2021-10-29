@@ -27,6 +27,7 @@ $last_id = 0;
 
 $sql = "INSERT INTO orders(fname, lname, addr1, addr2, city, zip, phone, email, total, payment_method) VALUES ('$fname', '$lname', '$addr1', '$addr2', '$city', '$pcode', '$mobile', '$email', '$total', '$paymentMethod')";
 $result = $conn->query($sql);
+
 if ($result) {
     $last_id = $conn->insert_id;
     //cart to details
@@ -36,6 +37,9 @@ if ($result) {
         while ($row = $cartdata->fetch_assoc()) {
             $sql = "INSERT INTO order_details(order_id, item_id, qty) VALUES ('$last_id', '" . $row['itemid'] . "', '" . $row['qty'] . "')";
             $conn->query($sql);
+            //reduce qty
+            $sql3 = "UPDATE products SET qty = qty - " . $row['qty'] . ",sold=sold+" . $row['qty'] . " WHERE id = '" . $row['itemid'] . "'";
+            $conn->query($sql3);
         }
     }
     //delete cart
